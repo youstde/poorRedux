@@ -1,3 +1,4 @@
+import reducer from './reducer'
 
 export default function createStore(initState) {
     let state = initState;
@@ -8,8 +9,8 @@ export default function createStore(initState) {
       listeners.push(listener);
     }
   
-    function changeState(newState) {
-      state = newState;
+    function dispatch(action) {
+      state = reducer(state, action);
       /*通知*/
       for (let i = 0; i < listeners.length; i++) {
         const listener = listeners[i];
@@ -23,7 +24,7 @@ export default function createStore(initState) {
   
     return {
       subscribe,
-      changeState,
+      dispatch,
       getState
     }
   }
